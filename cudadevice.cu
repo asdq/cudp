@@ -1,30 +1,32 @@
 #include <cuda.h>
-#include <cstdio>
 #include "cudadevice.h"
-
-#define cudaCheck(stmt)                                     \
-    do {                                                    \
-        cudaError_t err = stmt;                             \
-        if (err != cudaSuccess) {                           \
-            fprintf(stderr, "%s in %s at line %d\n",        \
-            cudaGetErrorString(err), __FILE__, __LINE__);   \
-            cudaDeviceReset();                              \
-            exit(EXIT_FAILURE);                             \
-        }                                                   \
-    } while(0)
+#include <exception>
+#include <sstream>
 
 int CudaDevice::deviceCount()
 {
     int n;
+    cudaError_t res;
     
-    cudaCheck(cudaGetDeviceCount(&n));
+    res = cudaGetDeviceCount(&n);
+    if (res != cudaSuccess) { n = 0; }
     return n;
 }
 
 CudaDevice::CudaDevice(int dev)
 {
+    cudaError_t res;
     auto p = new cudaDeviceProp;
-    cudaCheck(cudaGetDeviceProperties(p, dev));
+    
+    res = cudaGetDeviceProperties(p, dev);
+    if (res != cudaSuccess) {
+        std::stringstream sstr;
+        
+        delete p;
+        sstr << "CudaDevice: invalid device " << dev << '.';
+        throw Exception(sstr.str());
+    }
+    
     m_prop = std::unique_ptr<cudaDeviceProp>(p);
 }
 

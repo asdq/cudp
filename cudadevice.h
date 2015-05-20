@@ -2,6 +2,7 @@
 #define CUDA_DEVICE_H
 
 #include <memory>
+#include <exception>
 
 struct cudaDeviceProp;
 
@@ -11,7 +12,17 @@ class CudaDevice
 
 public:
 
-    static int deviceCount();
+    class Exception : public std::exception
+    {
+        std::string m_msg;
+    public:
+        Exception(const std::string &msg) noexcept : m_msg(msg) {}
+        Exception(std::string &&msg) noexcept : m_msg(std::move(msg)) {}
+        const char* what() const noexcept { return m_msg.c_str(); }
+    };
+
+    static
+    int deviceCount();
 
     explicit
     CudaDevice(int);

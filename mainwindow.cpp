@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "cudadevice.h"
 #include "deviceinfowidget.h"
+#include <QMessageBox>
 #include <QStringBuilder>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -13,8 +14,17 @@ MainWindow::MainWindow(QWidget *parent) :
     const int numDevices = CudaDevice::deviceCount();
     
     for (int i = 0; i < numDevices; ++i) {
-        QString label = "device &" % QString::number(i);
-        ui -> tabWidget -> addTab(new DeviceInfoWidget(i), label);
+        try {
+            auto dw = new DeviceInfoWidget(i);
+            
+            ui -> tabWidget -> addTab(dw, "device &" % QString::number(i));
+        } catch (CudaDevice::Exception e) {
+            auto msgBox = new QMessageBox(this);
+            
+            msgBox -> setModal(false);
+            msgBox -> setText(e.what());
+            msgBox -> show();
+        }
     }
 }
 
