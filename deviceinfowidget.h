@@ -12,7 +12,10 @@ class DeviceInfoWidget : public QWidget
     Q_OBJECT
     
 public:
-    explicit DeviceInfoWidget(int deviceNum, QWidget *parent = 0);
+    
+    explicit
+    DeviceInfoWidget(int deviceNum, QWidget *parent = 0);
+    
     ~DeviceInfoWidget();
     
 private:
