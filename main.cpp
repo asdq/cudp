@@ -1,13 +1,12 @@
-#include <iostream>
-#include "cudadevice.h"
+#include "mainwindow.h"
+#include <QApplication>
+#include <cuda.h>
 
-using namespace std;
-
-int main()
+int main(int argc, char *argv[])
 {
-    auto nDev = CudaDevice::deviceCount();
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
     
-    cout << "Number of devices found: " << nDev << endl;
-    return 0;
+    return a.exec();
 }
-
