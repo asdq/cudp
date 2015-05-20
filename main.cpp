@@ -1,10 +1,13 @@
 #include <iostream>
+#include "cudadevice.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "Hello World!" << endl;
+    auto nDev = CudaDevice::deviceCount();
+    
+    cout << "Number of devices found: " << nDev << endl;
     return 0;
 }
 
