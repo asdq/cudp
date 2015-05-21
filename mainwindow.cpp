@@ -34,7 +34,7 @@ void MainWindow::addDevices()
             CudaDevice dev(i);
             auto dw = new DeviceInfoWidget;
             auto label = QString("Device &%1").arg(i);
-            
+
             dw -> setData(dev);
             ui -> tabWidget -> addTab(dw, label);
         } catch (CudaDevice::Exception e) {
@@ -52,16 +52,18 @@ void MainWindow::addDevices()
  */
 void MainWindow::initHelp()
 {
-    QString about = tr("<p align=\"center\">"
-                       "<b>Display CUDA devices v0.2</b></p>"
-                       "<p align=\"justify\">Lookup for CUDA devices. "
-                       "For each device found, display its properties.</p>"
-                       "<p align=\"right\"><b>Author: Fabio Vaccari</b><p>");
+    QString txt = tr("<p align=\"center\">"
+                     "<b>Display CUDA devices v.0.2</b></p>"
+                     "<p align=\"justify\">Lookup for CUDA devices. "
+                     "For each device found, display its properties.</p>"
+                     "<p align=\"right\"><b>Author: Fabio Vaccari</b><p>"
+                     "<p align=\"right\"><b>License: MIT</b><p>"
+                     );
     
     m_messageBox = new QMessageBox(this);
     m_messageBox -> setTextFormat(Qt::RichText);
     m_messageBox -> setWindowTitle(tr("About cudp"));
-    m_messageBox -> setText(about);
+    m_messageBox -> setText(txt);
     
     connect(ui -> actionAbout, SIGNAL(triggered()), SLOT(onActionAbout()));
     connect(ui -> actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));

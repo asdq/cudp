@@ -1,4 +1,5 @@
 #include "cudadevice.h"
+#include <cassert>
 #include <cuda.h>
 #include <sstream>
 
@@ -15,21 +16,35 @@ int CudaDevice::deviceCount()
 CudaDevice::CudaDevice(int dev)
 {
     cudaError_t res;
-    auto p = new cudaDeviceProp;
+    m_prop = new cudaDeviceProp;
     
-    res = cudaGetDeviceProperties(p, dev);
+    res = cudaGetDeviceProperties(m_prop, dev);
     if (res != cudaSuccess) {
         std::stringstream sstr;
         
-        delete p;
+        delete m_prop;
         sstr << "CudaDevice: invalid device " << dev << '.';
         throw Exception(sstr.str());
     }
-    
-    m_prop = std::unique_ptr<cudaDeviceProp>(p);
 }
 
-CudaDevice::~CudaDevice() {}
+CudaDevice::~CudaDevice()
+{
+    delete m_prop;
+}
+
+// hide default copy constructor
+CudaDevice::CudaDevice(const CudaDevice&)
+{
+    assert(false);
+}
+
+// hide default assigment
+CudaDevice& CudaDevice::operator = (const CudaDevice&)
+{
+    assert(false);
+    return *this;
+}
 
 int CudaDevice::majorVersion() const
 {
@@ -118,5 +133,5 @@ int CudaDevice::asyncEngineCount() const
 
 bool CudaDevice::deviceMapHost() const
 {
-    return m_prop -> canMapHostMemory;
+    return m_prop -> canMapHostMemory > 0;
 }

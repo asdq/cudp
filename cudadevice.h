@@ -2,14 +2,17 @@
 #define CUDA_DEVICE_H
 
 #include <exception>
-#include <memory>
 #include <string>
 
 struct cudaDeviceProp;
 
 class CudaDevice
 {
-    std::unique_ptr<cudaDeviceProp> m_prop;
+    cudaDeviceProp *m_prop;
+
+    // hide default copy constructor and assigment
+    CudaDevice(const CudaDevice&);
+    CudaDevice& operator = (const CudaDevice&);
 
 public:
 
@@ -17,9 +20,8 @@ public:
     {
         std::string m_msg;
     public:
-        Exception(const std::string &msg) noexcept : m_msg(msg) {}
-        Exception(std::string &&msg) noexcept : m_msg(std::move(msg)) {}
-        const char* what() const noexcept { return m_msg.c_str(); }
+        Exception(const std::string &msg) : m_msg(msg) {}
+        const char* what() const { return m_msg.c_str(); }
     };
 
     static
