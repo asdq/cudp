@@ -7,6 +7,8 @@ namespace Ui {
     class MainWindow;
 }
 
+class QMessageBox;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -15,8 +17,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     
+private slots:
+    void onActionAbout();
+    
 private:
     Ui::MainWindow *ui;
+    QMessageBox *m_messageBox;
+    
+    void addDevices();
+    void initHelp();
 };
 
 #endif // MAINWINDOW_H
