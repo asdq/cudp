@@ -1,9 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "cudadevice.h"
 #include "deviceinfowidget.h"
 #include <QMessageBox>
-#include <QStringBuilder>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,9 +13,12 @@ MainWindow::MainWindow(QWidget *parent) :
     
     for (int i = 0; i < numDevices; ++i) {
         try {
-            auto dw = new DeviceInfoWidget(i);
+            CudaDevice dev(i);
+            auto dw = new DeviceInfoWidget;
+            auto label = QString("Device &%1").arg(i);
             
-            ui -> tabWidget -> addTab(dw, "device &" % QString::number(i));
+            dw -> setData(dev);
+            ui -> tabWidget -> addTab(dw, label);
         } catch (CudaDevice::Exception e) {
             auto msgBox = new QMessageBox(this);
             

@@ -1,6 +1,5 @@
-#include <cuda.h>
 #include "cudadevice.h"
-#include <exception>
+#include <cuda.h>
 #include <sstream>
 
 int CudaDevice::deviceCount()
@@ -42,7 +41,7 @@ int CudaDevice::minorVersion() const
     return m_prop -> minor;
 }
 
-char* CudaDevice::name() const
+const char* CudaDevice::name() const
 {
     return m_prop -> name;
 }

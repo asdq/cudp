@@ -20,35 +20,21 @@
       <string>Device</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="0" column="0">
-       <widget class="QLabel" name="deviceNumberLabel">
-        <property name="text">
-         <string>device number:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="deviceNumberValue">
+      <item row="4" column="1">
+       <widget class="QLabel" name="deviceAsyncValue">
         <property name="text">
          <string>TextLabel</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="0" column="0">
        <widget class="QLabel" name="deviceNameLabel">
         <property name="text">
          <string>device name:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="deviceNameValue">
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
+      <item row="1" column="0">
        <widget class="QLabel" name="deviceVersionLabel">
         <property name="text">
          <string>version number:</string>
@@ -56,13 +42,34 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLabel" name="deviceOverlappingValue">
+       <widget class="QLabel" name="deviceMapValue">
         <property name="text">
          <string>TextLabel</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0">
+       <widget class="QLabel" name="deviceMapLabel">
+        <property name="text">
+         <string>device maps to host:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="deviceAsyncLabel">
+        <property name="text">
+         <string>number of asynchronous engines:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="deviceNameValue">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
        <widget class="QLabel" name="deviceOverlappingLabel">
         <property name="text">
          <string>overlapping device:</string>
@@ -70,35 +77,14 @@
        </widget>
       </item>
       <item row="2" column="1">
+       <widget class="QLabel" name="deviceOverlappingValue">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
        <widget class="QLabel" name="deviceVersionValue">
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLabel" name="deviceAsyncValue">
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="deviceAsyncLabel">
-        <property name="text">
-         <string>number of asynchronous engines:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="deviceMapLabel">
-        <property name="text">
-         <string>device maps to host:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLabel" name="deviceMapValue">
         <property name="text">
          <string>TextLabel</string>
         </property>

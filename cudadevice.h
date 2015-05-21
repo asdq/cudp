@@ -1,8 +1,9 @@
 #ifndef CUDA_DEVICE_H
 #define CUDA_DEVICE_H
 
-#include <memory>
 #include <exception>
+#include <memory>
+#include <string>
 
 struct cudaDeviceProp;
 
@@ -31,7 +32,7 @@ public:
 
     int majorVersion() const;
     int minorVersion() const;
-    char* name() const;
+    const char* name() const;
     bool deviceMapHost() const;
     bool deviceOverlap() const;
     unsigned totalGlobalMem() const;
