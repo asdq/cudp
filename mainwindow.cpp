@@ -3,13 +3,18 @@
 #include "deviceinfowidget.h"
 #include <QMessageBox>
 
+extern "C" {
+#include <cuda_runtime_api.h>
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    m_messageBox = new QMessageBox(this);
     ui->setupUi(this);
-    addDevices();
     initHelp();
+    addDevices();
 }
 
 MainWindow::~MainWindow()
@@ -23,48 +28,68 @@ void MainWindow::onActionAbout()
 }
 
 /*
- * @brief Create a tab for each device.
- */
-void MainWindow::addDevices()
-{
-    const int numDevices = CudaDevice::deviceCount();
-    
-    for (int i = 0; i < numDevices; ++i) {
-        try {
-            CudaDevice dev(i);
-            auto dw = new DeviceInfoWidget;
-            auto label = QString("Device &%1").arg(i);
-
-            dw -> setData(dev);
-            ui -> tabWidget -> addTab(dw, label);
-        } catch (CudaDevice::Exception e) {
-            auto msgBox = new QMessageBox(this);
-            
-            msgBox -> setModal(false);
-            msgBox -> setText(e.what());
-            msgBox -> show();
-        }
-    }
-}
-
-/*
  * @brief Initialize Help dialogs.
  */
 void MainWindow::initHelp()
 {
     QString txt = tr("<p align=\"center\">"
-                     "<b>Display CUDA devices v.0.2</b></p>"
-                     "<p align=\"justify\">Lookup for CUDA devices. "
-                     "For each device found, display its properties.</p>"
+                     "<b>Display CUDA devices version 0.3</b></p>"
+                     "<p align=\"justify\">Lookup for CUDA devices. Display "
+                     "in a tab the properties of each device found.</p>"
                      "<p align=\"right\"><b>Author: Fabio Vaccari</b><p>"
                      "<p align=\"right\"><b>License: MIT</b><p>"
                      );
     
-    m_messageBox = new QMessageBox(this);
     m_messageBox -> setTextFormat(Qt::RichText);
     m_messageBox -> setWindowTitle(tr("About cudp"));
     m_messageBox -> setText(txt);
     
     connect(ui -> actionAbout, SIGNAL(triggered()), SLOT(onActionAbout()));
     connect(ui -> actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+}
+
+/*
+ * @brief Create a tab for each device.
+ */
+void MainWindow::addDevices()
+{
+    cudaError_t err;
+    int numDevices;
+    
+    err = cudaGetDeviceCount(&numDevices);
+    
+    if (err != cudaSuccess) {
+        QMessageBox *msgBox = new QMessageBox(this);
+        QString txt;
+        
+        if (err == cudaErrorNoDevice) {
+            txt = tr("CUDA Error: No device found.");
+        } else if (err == cudaErrorInsufficientDriver) {
+            txt = tr("CUDA Error: Insufficient driver.");
+        } else { 
+            txt = tr("CUDA Error: Unhandled error %L1").arg(err);
+        }
+        msgBox -> setText(txt);
+        msgBox -> show();
+        return;
+    }
+    
+    for (int i = 0; i < numDevices; ++i) {
+        cudaDeviceProp dev;
+        
+        err = cudaGetDeviceProperties(&dev, i);
+        if (err == cudaSuccess) {
+            DeviceInfoWidget *dw = new DeviceInfoWidget;
+            QString label = QString("Device &%L1").arg(i);
+            
+            dw -> setData(&dev);
+            ui -> tabWidget -> addTab(dw, label);
+        } else {
+            QMessageBox *msgBox = new QMessageBox(this);
+            
+            msgBox -> setModal(false);
+            msgBox -> setText(tr("Invalid device %L1.").arg(i));
+            msgBox -> show();
+        }
+    }
 }

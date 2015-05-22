@@ -2,7 +2,8 @@
 #define DEVICEINFOWIDGET_H
 
 #include <QWidget>
-#include "cudadevice.h"
+
+struct cudaDeviceProp;
 
 namespace Ui {
     class DeviceInfoWidget;
@@ -19,7 +20,7 @@ public:
     
     ~DeviceInfoWidget();
     
-    void setData(const CudaDevice &dev);
+    void setData(cudaDeviceProp *dev);
     
 private:
     Ui::DeviceInfoWidget *ui;
