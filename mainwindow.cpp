@@ -41,7 +41,7 @@ void MainWindow::initHelp()
                      );
     
     m_messageBox -> setTextFormat(Qt::RichText);
-    m_messageBox -> setWindowTitle(tr("About cudp"));
+    m_messageBox -> setWindowTitle(tr("About QtCUDAProperties"));
     m_messageBox -> setText(txt);
     
     connect(ui -> actionAbout, SIGNAL(triggered()), SLOT(onActionAbout()));
