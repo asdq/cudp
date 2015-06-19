@@ -22,11 +22,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::onActionAbout()
-{
-    m_messageBox -> exec();
-}
-
 /*
  * @brief Initialize Help dialogs.
  */
@@ -44,7 +39,7 @@ void MainWindow::initHelp()
     m_messageBox -> setWindowTitle(tr("About QtCUDAProperties"));
     m_messageBox -> setText(txt);
     
-    connect(ui -> actionAbout, SIGNAL(triggered()), SLOT(onActionAbout()));
+    connect(ui -> actionAbout, SIGNAL(triggered()), m_messageBox, SLOT(exec()));
     connect(ui -> actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 }
 

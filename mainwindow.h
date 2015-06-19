@@ -17,9 +17,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     
-private slots:
-    void onActionAbout();
-    
 private:
     Ui::MainWindow *ui;
     QMessageBox *m_messageBox;
