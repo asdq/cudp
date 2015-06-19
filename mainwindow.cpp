@@ -30,8 +30,10 @@ void MainWindow::initHelp()
     QString txt = tr("<p align=\"center\">"
                      "<b>Display CUDA devices version 0.3</b></p>"
                      "<p align=\"justify\">Lookup for CUDA devices. Display "
-                     "in a tab the properties of each device found.</p>"
-                     "<p align=\"right\"><b>Author: Fabio Vaccari</b><p>"
+                     "in a tab the properties of each device found. See "
+                     "<a href=\"https://github.com/asdq/qtcudaprop\">"
+                     "github.com/asdq/qtcudaprop</a>.</p>"
+                     "<p align=\"right\"><b>Author: Fabio Vaccari</b></p>"
                      "<p align=\"right\"><b>License: MIT</b><p>"
                      );
     
